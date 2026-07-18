@@ -14,17 +14,12 @@
 
 ## Quickstart
 
-Unrestrict runs directly from this repository—there is nothing to build and no dependencies to install.
+Unrestrict runs directly from the downloaded repository—there is nothing to build and no dependencies to install.
 
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/el1anbtw/Unrestrict.git
-   ```
-
+1. Click **Code → Download ZIP** on this page and extract the archive. Alternatively, clone it with `git clone https://github.com/el1anbtw/Unrestrict.git`.
 2. Open `chrome://extensions` in Chrome.
 3. Enable **Developer mode**.
-4. Select **Load unpacked** and choose the `extension` directory.
+4. Select **Load unpacked** and choose the extracted repository folder itself—the one containing `manifest.json`. There is no nested extension folder to select.
 5. Pin **Unrestrict** to the toolbar.
 
 Open a site, click the extension icon, enable **Remove restrictions**, and approve access for that site. The tab reloads once so Unrestrict can start from a clean page state.
@@ -68,27 +63,10 @@ Chrome does not allow extensions to inject into `chrome://` pages, the Chrome We
 
 Cross-origin frames require permission for their own origin or global access. Some highly customized web apps may need a stronger profile, while others may work best with **Normal**.
 
-## Development
-
-The extension targets Manifest V3 and Chrome 120 or newer. Source code lives in `extension/`; the repository also includes dependency-free static and contract checks.
-
-```bash
-npm run check
-npm test
-```
-
-To open the manual test matrix locally:
-
-```bash
-npm run serve:fixture
-```
-
-Then follow [`tests/manual-browser.md`](tests/manual-browser.md). Changes to files under `extension/` can be picked up with the reload button on `chrome://extensions`.
-
 ## Project structure
 
 ```text
-extension/
+Unrestrict/
 ├── content/          page and isolated-world protection profiles
 ├── icons/            extension icons
 ├── lib/              shared settings logic

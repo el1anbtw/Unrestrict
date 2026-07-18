@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Unrestrict</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="hero">
+        <img class="brand-mark" src="../icons/icon48.png" alt="">
+        <div class="hero-copy">
+          <div class="title-line">
+            <h1>Unrestrict</h1>
+            <span id="status-pill" class="status-pill off">
+              <span class="status-dot" aria-hidden="true"></span>
+              <span id="status-text">Off</span>
+            </span>
+          </div>
+          <p id="hostname" title="">Detecting site…</p>
+        </div>
+      </header>
+
+      <p id="notice" class="notice" role="status" aria-live="polite" hidden></p>
+
+      <section class="card site-card" aria-labelledby="site-heading">
+        <div class="section-heading">
+          <span class="eyebrow">Current site</span>
+          <span class="scope-chip">site access</span>
+        </div>
+
+        <label class="row primary" for="enabled">
+          <span class="row-copy">
+            <strong id="site-heading">Remove restrictions</strong>
+            <small>Context menu, selection, and clipboard</small>
+          </span>
+          <input id="enabled" type="checkbox" role="switch" aria-label="Remove restrictions on this site">
+        </label>
+
+        <div class="field">
+          <label for="profile">Protection profile</label>
+          <select id="profile">
+            <option value="normal">Normal — compatible</option>
+            <option value="strong">Strong</option>
+            <option value="strong-antidebug">Strong + anti-debug</option>
+          </select>
+          <p id="profile-description" class="field-help">
+            Removes targeted restrictions while preserving page behavior.
+          </p>
+        </div>
+
+        <label class="row compact" for="subdomains">
+          <span class="row-copy">
+            <strong>Include subdomains</strong>
+            <small>For example, docs.example.com</small>
+          </span>
+          <input id="subdomains" type="checkbox" role="switch" aria-label="Apply to subdomains">
+        </label>
+      </section>
+
+      <section class="card global-card" aria-labelledby="global-heading">
+        <label class="row" for="global">
+          <span class="row-copy">
+            <span class="eyebrow">Extended access</span>
+            <strong id="global-heading">Run on all sites</strong>
+            <small>Requested separately and only when you enable it</small>
+          </span>
+          <input id="global" type="checkbox" role="switch" aria-label="Run on all sites">
+        </label>
+      </section>
+
+      <footer>
+        <span class="privacy-icon" aria-hidden="true">✓</span>
+        <span>Local only · No analytics · No network requests</span>
+      </footer>
+    </main>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

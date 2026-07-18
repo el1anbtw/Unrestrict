@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Unrestrict fixture matrix</title>
+    <style>
+      body { font: 16px/1.5 system-ui; padding: 24px; }
+      section { margin-bottom: 24px; }
+      #blocked-selection { user-select: none; }
+      *:not(input):not(textarea)::selection {
+        background-color: transparent !important;
+        color: inherit !important;
+      }
+      #media-wrap { position: relative; width: 180px; height: 90px; }
+      #media { width: 180px; height: 90px; background: #8ecae6; }
+      #overlay { position: absolute; inset: 0; z-index: 2; background: rgb(255 0 0 / 1%); }
+    </style>
+  </head>
+  <body oncontextmenu="return false">
+    <h1>Fixture matrix</h1>
+    <section id="blocked-selection">This text must remain selectable and visibly highlighted despite hostile selection CSS.</section>
+    <section>
+      <input id="input" value="before">
+      <div id="editable" contenteditable="true">editable</div>
+    </section>
+    <section id="media-wrap">
+      <canvas id="media" width="180" height="90"></canvas>
+      <div id="overlay"></div>
+    </section>
+    <section id="custom-menu">Legitimate custom context menu target</section>
+    <script>
+      window.fixture = { copyCalls: 0, contextCalls: 0, selectionClears: 0 };
+      document.addEventListener("copy", (event) => {
+        window.fixture.copyCalls += 1;
+        event.clipboardData?.setData("text/plain", "corrupted");
+        event.preventDefault();
+      });
+      document.addEventListener("contextmenu", (event) => {
+        window.fixture.contextCalls += 1;
+        event.preventDefault();
+      });
+      document.addEventListener("selectionchange", () => {
+        window.fixture.selectionClears += 1;
+        document.getSelection()?.removeAllRanges();
+      });
+      document.querySelector("#custom-menu").addEventListener("contextmenu", (event) => {
+        event.preventDefault();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,9 @@
+/*
+ * Run at the USER cascade origin so hostile AUTHOR !important rules cannot
+ * make an existing selection transparent. System colors follow the browser's
+ * native theme and forced-colors preferences.
+ */
+*::selection {
+  background-color: Highlight !important;
+  color: HighlightText !important;
+}

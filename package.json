@@ -1,0 +1,12 @@
+{
+  "name": "unrestrict-chrome-extension",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Local-first Chrome extension that restores native page interactions on selected sites.",
+  "scripts": {
+    "check": "node scripts/check.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "serve:fixture": "node tests/serve-fixture.mjs"
+  }
+}

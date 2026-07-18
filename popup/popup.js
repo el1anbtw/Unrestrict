@@ -3,12 +3,43 @@ const elements = {
   global: document.querySelector("#global"),
   hostname: document.querySelector("#hostname"),
   notice: document.querySelector("#notice"),
-  profile: document.querySelector("#profile"),
+  profiles: [...document.querySelectorAll('input[name="profile"]')],
   profileDescription: document.querySelector("#profile-description"),
   status: document.querySelector("#status-pill"),
   statusText: document.querySelector("#status-text"),
   subdomains: document.querySelector("#subdomains"),
+  themeToggle: document.querySelector("#theme-toggle"),
 };
+
+const THEME_KEY = "unrestrict-theme";
+
+function applyTheme(theme) {
+  const selectedTheme = theme === "light" ? "light" : "dark";
+  document.documentElement.dataset.theme = selectedTheme;
+  elements.themeToggle.setAttribute("aria-pressed", String(selectedTheme === "light"));
+  elements.themeToggle.setAttribute(
+    "aria-label",
+    `Switch to ${selectedTheme === "light" ? "dark" : "light"} theme`
+  );
+}
+
+let savedTheme = "dark";
+try {
+  savedTheme = localStorage.getItem(THEME_KEY) || "dark";
+} catch {
+  // A dark default still works if local storage is unavailable.
+}
+applyTheme(savedTheme);
+
+elements.themeToggle.addEventListener("click", () => {
+  const nextTheme = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+  applyTheme(nextTheme);
+  try {
+    localStorage.setItem(THEME_KEY, nextTheme);
+  } catch {
+    // Theme persistence is optional.
+  }
+});
 
 let activeTab = null;
 let hostname = "";
@@ -42,8 +73,9 @@ function showNotice(message) {
 
 function setBusy(value) {
   busy = value;
-  for (const element of [elements.enabled, elements.global, elements.profile, elements.subdomains]) {
-    element.disabled = value || !hostname || (element === elements.profile && !elements.enabled.checked);
+  for (const element of [elements.enabled, elements.global, elements.subdomains, ...elements.profiles]) {
+    const isProfile = elements.profiles.includes(element);
+    element.disabled = value || !hostname || (isProfile && !elements.enabled.checked);
   }
 }
 
@@ -52,11 +84,14 @@ function render(state) {
   currentSettings = state.settings;
   currentProfile = state.profile;
   elements.enabled.checked = state.profile !== "off";
-  elements.profile.value = state.profile === "off" ? "normal" : state.profile;
-  elements.profile.disabled = state.profile === "off";
+  const selectedProfile = state.profile === "off" ? "normal" : state.profile;
+  for (const profile of elements.profiles) {
+    profile.checked = profile.value === selectedProfile;
+    profile.disabled = state.profile === "off";
+  }
   elements.subdomains.checked = explicit?.includeSubdomains === true;
   elements.global.checked = state.settings.globalEnabled === true;
-  elements.status.className = `status-pill ${state.profile}`;
+  elements.status.className = `status-badge ${state.profile}`;
   elements.statusText.textContent = PROFILE_UI[state.profile].label;
   elements.profileDescription.textContent = PROFILE_UI[state.profile].description;
   elements.hostname.title = elements.hostname.textContent;
@@ -114,13 +149,17 @@ async function handle(action) {
 }
 
 elements.enabled.addEventListener("change", () => handle(async () => {
-  const profile = elements.enabled.checked ? elements.profile.value : "off";
+  const profile = elements.enabled.checked
+    ? elements.profiles.find((option) => option.checked)?.value || "normal"
+    : "off";
   await setSite(profile);
 }));
 
-elements.profile.addEventListener("change", () => handle(async () => {
-  await setSite(elements.profile.value);
-}));
+for (const profile of elements.profiles) {
+  profile.addEventListener("change", () => {
+    if (profile.checked) handle(async () => setSite(profile.value));
+  });
+}
 
 elements.subdomains.addEventListener("change", () => handle(async () => {
   const profile = currentProfile === "off" ? "normal" : currentProfile;
@@ -162,7 +201,7 @@ async function initialize() {
 
   if (!url || !["http:", "https:"].includes(url.protocol)) {
     elements.hostname.textContent = "Extensions cannot access this page";
-    elements.status.className = "status-pill off";
+    elements.status.className = "status-badge off";
     elements.statusText.textContent = "Unavailable";
     elements.profileDescription.textContent = PROFILE_UI.off.description;
     showNotice("Chrome blocks extension injection on internal and protected pages.");

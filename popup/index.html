@@ -7,73 +7,126 @@
     <link rel="stylesheet" href="popup.css">
   </head>
   <body>
-    <main class="shell">
-      <header class="hero">
-        <img class="brand-mark" src="../icons/icon48.png" alt="">
-        <div class="hero-copy">
-          <div class="title-line">
-            <h1>Unrestrict</h1>
-            <span id="status-pill" class="status-pill off">
-              <span class="status-dot" aria-hidden="true"></span>
-              <span id="status-text">Off</span>
-            </span>
+    <main class="popup-shell">
+      <header class="topbar">
+        <div class="brand" aria-label="Unrestrict">
+          <span class="brand-frame">
+            <img src="../icons/icon48.png" alt="">
+          </span>
+          <span class="brand-name">Unrestrict</span>
+        </div>
+
+        <div class="topbar-actions">
+          <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to light theme" aria-pressed="false">
+            <span class="theme-thumb" aria-hidden="true"></span>
+            <svg class="theme-icon moon-icon" aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M20 15.2A8.5 8.5 0 0 1 8.8 4a8.5 8.5 0 1 0 11.2 11.2Z"/>
+            </svg>
+            <svg class="theme-icon sun-icon" aria-hidden="true" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="3.5"/>
+              <path d="M12 2.5v2M12 19.5v2M4.5 12h-2M21.5 12h-2M5.3 5.3 6.7 6.7M17.3 17.3l1.4 1.4M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4"/>
+            </svg>
+          </button>
+          <div id="status-pill" class="status-badge off" aria-live="polite">
+            <span class="status-light" aria-hidden="true"></span>
+            <span id="status-text">Off</span>
           </div>
-          <p id="hostname" title="">Detecting site…</p>
         </div>
       </header>
 
+      <section id="main-control" class="site-panel" aria-labelledby="site-title">
+        <div class="site-meta">
+          <span class="meta-label">This tab</span>
+          <span class="live-mark" aria-hidden="true">●</span>
+        </div>
+        <p id="hostname" class="hostname" title="">Detecting site…</p>
+
+        <label class="power-control" for="enabled">
+          <span class="power-copy">
+            <strong id="site-title">Free this page</strong>
+            <small>Restore right-click, selection, copy &amp; paste</small>
+          </span>
+          <input id="enabled" type="checkbox" role="switch" aria-label="Free this page">
+          <span class="switch-ui" aria-hidden="true"><span></span></span>
+        </label>
+      </section>
+
       <p id="notice" class="notice" role="status" aria-live="polite" hidden></p>
 
-      <section class="card site-card" aria-labelledby="site-heading">
-        <div class="section-heading">
-          <span class="eyebrow">Current site</span>
-          <span class="scope-chip">site access</span>
+      <section class="profile-section" aria-labelledby="profile-heading">
+        <div class="section-intro">
+          <div>
+            <span class="section-index">01</span>
+            <h2 id="profile-heading">Choose your strength</h2>
+          </div>
+          <span class="recommendation">Start light</span>
         </div>
 
-        <label class="row primary" for="enabled">
-          <span class="row-copy">
-            <strong id="site-heading">Remove restrictions</strong>
-            <small>Context menu, selection, and clipboard</small>
-          </span>
-          <input id="enabled" type="checkbox" role="switch" aria-label="Remove restrictions on this site">
-        </label>
+        <div id="profile" class="profile-list" role="radiogroup" aria-describedby="profile-description">
+          <label class="profile-option">
+            <input type="radio" name="profile" value="normal">
+            <span class="profile-number">A</span>
+            <span class="profile-copy">
+              <strong>Normal</strong>
+              <small>Compatible</small>
+            </span>
+            <span class="radio-mark" aria-hidden="true"></span>
+          </label>
 
-        <div class="field">
-          <label for="profile">Protection profile</label>
-          <select id="profile">
-            <option value="normal">Normal — compatible</option>
-            <option value="strong">Strong</option>
-            <option value="strong-antidebug">Strong + anti-debug</option>
-          </select>
-          <p id="profile-description" class="field-help">
-            Removes targeted restrictions while preserving page behavior.
-          </p>
+          <label class="profile-option">
+            <input type="radio" name="profile" value="strong">
+            <span class="profile-number">B</span>
+            <span class="profile-copy">
+              <strong>Strong</strong>
+              <small>For stubborn blockers</small>
+            </span>
+            <span class="radio-mark" aria-hidden="true"></span>
+          </label>
+
+          <label class="profile-option">
+            <input type="radio" name="profile" value="strong-antidebug">
+            <span class="profile-number">C</span>
+            <span class="profile-copy">
+              <strong>Strong +<br>anti-debug</strong>
+              <small>Protects DevTools too</small>
+            </span>
+            <span class="radio-mark" aria-hidden="true"></span>
+          </label>
+        </div>
+        <p id="profile-description" class="profile-description">
+          Removes targeted restrictions while preserving page behavior.
+        </p>
+      </section>
+
+      <section class="scope-section" aria-labelledby="scope-heading">
+        <div class="section-intro compact">
+          <div>
+            <span class="section-index">02</span>
+            <h2 id="scope-heading">Set the reach</h2>
+          </div>
         </div>
 
-        <label class="row compact" for="subdomains">
-          <span class="row-copy">
-            <strong>Include subdomains</strong>
-            <small>For example, docs.example.com</small>
-          </span>
-          <input id="subdomains" type="checkbox" role="switch" aria-label="Apply to subdomains">
-        </label>
+        <div class="scope-list">
+          <label class="scope-row" for="subdomains">
+            <span class="scope-copy">
+              <strong>Include subdomains</strong>
+              <small>Also apply below this domain</small>
+            </span>
+            <input id="subdomains" type="checkbox" role="switch" aria-label="Include subdomains">
+            <span class="mini-switch" aria-hidden="true"><span></span></span>
+          </label>
+
+          <label class="scope-row global-row" for="global">
+            <span class="scope-copy">
+              <strong>Every website</strong>
+              <small>Requires broad browser access</small>
+            </span>
+            <input id="global" type="checkbox" role="switch" aria-label="Run on every website">
+            <span class="mini-switch" aria-hidden="true"><span></span></span>
+          </label>
+        </div>
       </section>
 
-      <section class="card global-card" aria-labelledby="global-heading">
-        <label class="row" for="global">
-          <span class="row-copy">
-            <span class="eyebrow">Extended access</span>
-            <strong id="global-heading">Run on all sites</strong>
-            <small>Requested separately and only when you enable it</small>
-          </span>
-          <input id="global" type="checkbox" role="switch" aria-label="Run on all sites">
-        </label>
-      </section>
-
-      <footer>
-        <span class="privacy-icon" aria-hidden="true">✓</span>
-        <span>Local only · No analytics · No network requests</span>
-      </footer>
     </main>
     <script type="module" src="popup.js"></script>
   </body>

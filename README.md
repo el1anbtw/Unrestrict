@@ -14,7 +14,7 @@
 
 ## Quickstart
 
-Install Unrestrict in a minute. No build step or dependencies are required.
+Install Unrestrict in under a minute. No build step or dependencies are required.
 
 1. **Download the extension.**
 

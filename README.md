@@ -14,15 +14,36 @@
 
 ## Quickstart
 
-Unrestrict runs directly from the downloaded repository—there is nothing to build and no dependencies to install.
+Install Unrestrict in a minute. No build step or dependencies are required.
 
-1. Click **Code → Download ZIP** on this page and extract the archive. Alternatively, clone it with `git clone https://github.com/el1anbtw/Unrestrict.git`.
-2. Open `chrome://extensions` in Chrome.
-3. Enable **Developer mode**.
-4. Select **Load unpacked** and choose the extracted repository folder itself—the one containing `manifest.json`. There is no nested extension folder to select.
-5. Pin **Unrestrict** to the toolbar.
+1. **Download the extension.**
 
-Open a site, click the extension icon, enable **Remove restrictions**, and approve access for that site. The tab reloads once so Unrestrict can start from a clean page state.
+   Click **Code → Download ZIP**, then extract the archive. You can also clone the repository:
+
+   ```bash
+   git clone https://github.com/el1anbtw/Unrestrict.git
+   ```
+
+2. **Open Chrome Extensions.**
+
+   Go to `chrome://extensions` in Chrome.
+
+3. **Enable Developer mode.**
+
+   Use the toggle in the top-right corner.
+
+4. **Load Unrestrict.**
+
+   Click **Load unpacked** and select the extracted repository folder.
+
+   > [!TIP]
+   > Select the folder that contains `manifest.json`. There is no nested extension folder.
+
+5. **Pin the extension.**
+
+   Pin **Unrestrict** to the toolbar for quick access.
+
+Open any site, click the Unrestrict icon, and enable **Remove restrictions**. Approve access when Chrome asks for it. The tab reloads once, and Unrestrict is ready to use.
 
 ## What it restores
 

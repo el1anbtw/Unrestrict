@@ -36,8 +36,7 @@ Install Unrestrict in a minute. No build step or dependencies are required.
 
    Click **Load unpacked** and select the extracted repository folder.
 
-   > [!TIP]
-   > Select the folder that contains `manifest.json`. There is no nested extension folder.
+   **Choose the folder that contains `manifest.json`.** There is no nested extension folder.
 
 5. **Pin the extension.**
 
